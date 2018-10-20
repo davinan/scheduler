@@ -172,7 +172,7 @@ function login() {
         } else {
             document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
         }
-    }, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
+    });//;, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
 }
 
 function getPosts() {
