@@ -184,14 +184,47 @@ function getPosts() {
     //         console.log(response);
     //     })
     // }
-function checkLoginState() {
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-    });
-}
+// function checkLoginState() {
+//       FB.getLoginStatus(function(response) {
+//         statusChangeCallback(response);
+//     });
+// }
 
 
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://connect.facebook.net/fr_FR/all.js"></script>
+<script>
+  // Replace the id by any other public page id
+  FB.api('107418620249503/feed', { limit: 3 }, function(result) {
+    $('#fb-feed').empty();
+    $(result.data).each(function(i, post) {
+        entry = $('<div class="fb-item"></div>');
+        if (post.icon) {
+          entry.append('<img class="icon" src="' + post.icon + '" />');
+        }
+        switch(post.type) {
+          case 'status':
+            entry.append('<div class="fb-content">' + post.message + ' (' + post.from.name + ')</div>');
+          break;
+
+          case 'link':
+            entry.append('<div class="fb-content">' + post.message + ' (' + post.from.name + ')</div>');
+            entry.append('<div class="fb-content"><a href="' + post.link + '">' + post.name + '</a></div>');
+          break;
+
+          case 'photo':
+          case 'video':
+            entry.append('<div class="fb-content"><a href="' + post.link + '">' + post.message + '</a> (' + post.from.name + ')</div>');
+          break;
+        }
+        $('#fb-feed').append(entry);
+    });
+  });
+</script>
+<div id="fb-feed">
+Chargement de l’activité récente de la page Facebook…
+</div>
 <h1> Test</h1>
 <p id='status'>Status</p>
 
@@ -200,11 +233,11 @@ function checkLoginState() {
 <button onclick="getLastName()">LAST NAME</button>
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
-<fb:login-button
+<!-- <fb:login-button
 scope="public_profile,email,publish_pages,user_posts"
 onlogin="checkLoginState();">
 Login
-</fb:login-button>
+</fb:login-button> -->
 <!-- <button onclick="initializeTestUser()">Init test user</button> -->
 
 <header>
