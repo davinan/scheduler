@@ -181,6 +181,17 @@ function getPosts() {
     })
 }
 
+// DELETE IF IT HAS ID ONLY
+function deletePost(){
+    FB.api('899836833535228_899870480198530', 'delete', function(response) {
+      if (!response || response.error) {
+        alert('Something wrong is not right...');
+      } else {
+        alert('FUNCIONA BIRL');
+      }
+    });
+}
+
 
 // function initializeTestUser() {
     //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
@@ -202,6 +213,7 @@ function getPosts() {
 <button onclick="getLastName()">LAST NAME</button>
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
+<button onclick="deletePost()">Deleta ai essa porra</button>
 <!-- <fb:login-button
 scope="public_profile,email,publish_pages,user_posts"
 onlogin="checkLoginState();">
