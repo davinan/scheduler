@@ -183,7 +183,7 @@ function getPosts() {
 
 // DELETE IF IT HAS ID ONLY
 function deletePost(){
-    FB.api('/899836833535228_899870480198530', 'delete', function(response) {
+    FB.api('https://graph.facebook.com/899836833535228_899870480198530', 'DELETE', function(response) {
       if (!response || response.error) {
         alert('Something wrong is not right...');
         console.log(response.error);
