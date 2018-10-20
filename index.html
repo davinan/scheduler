@@ -186,14 +186,19 @@
                     }
                 }, {scope: 'manage_pages,publish_pages,user_posts'});
             }
+            
+            function getPosts() {
+                FB.api('/me/feed','get', function(response) {
+                    console.log(response);
+                })}
         </script>
         <h1> Test</h1>
         <p id='status'>Status</p>
 
-
         <button onclick="post()">POST</button>
         <button onclick="login()">LOGIN</button>
         <button onclick="getLastName()">LAST NAME</button>
+        <button onclick="getPosts()">GET POSTS</button>
 
         <header>
             <div class="container">
