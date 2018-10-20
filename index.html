@@ -167,6 +167,12 @@
                     }
                 });
             }
+            
+            function getLastName() {
+                FB.api('/me', {fields: 'last_name'}, function(response) {
+                    console.log(response);
+                });
+            }
 
             function login() {
                 FB.login(function(response) {
@@ -187,6 +193,7 @@
 
         <button onclick="post()">POST</button>
         <button onclick="login()">LOGIN</button>
+        <button onclick="getLastName()">LAST NAME</button>
 
         <header>
             <div class="container">
