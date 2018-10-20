@@ -204,56 +204,73 @@
                     console.log(response);
                 })
             }
-
+            function initializeTestUser() {
+                Bundle params = new Bundle();
+                params.putString("password", "kataminaOla");
+                params.putString("name", "Mitchell Tchemmer");
+                /* make the API call */
+                    new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "/{test-user-id}",
+                        params,
+                        HttpMethod.POST,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                                /* handle the result */
+                            }
+                        }
             
-        </script>
-        <h1> Test</h1>
-        <p id='status'>Status</p>
+                    ).executeAsync();
+            }
+    </script>
+    <h1> Test</h1>
+    <p id='status'>Status</p>
 
-        <button onclick="post()">POST</button>
-        <button onclick="login()">LOGIN</button>
-        <button onclick="getLastName()">LAST NAME</button>
-        <button onclick="getPosts()">GET POSTS</button>
-        <button onclick="postTestUser()">Post to test user</button>
+    <button onclick="post()">POST</button>
+    <button onclick="login()">LOGIN</button>
+    <button onclick="getLastName()">LAST NAME</button>
+    <button onclick="getPosts()">GET POSTS</button>
+    <button onclick="postTestUser()">Post to test user</button>
+    <button onclick="initializeTestUser()">Init test user</button>
 
-        <header>
-            <div class="container">
-                <div id="branding">
-                    <font size="+1"><h1 id="scheduler"><img src="static/logo.png" alt="DNA" height="40" id="logoimg"></span><span class= "bad"> Scheduler</span></h1></font>
-                    <font color="white" size="+1"><h1 id="dAndT"></h1></font>
-                </div>
-                <br>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <font size="+1"><h1 id="scheduler"><img src="static/logo.png" alt="DNA" height="40" id="logoimg"></span><span class= "bad"> Scheduler</span></h1></font>
+                <font color="white" size="+1"><h1 id="dAndT"></h1></font>
             </div>
-        </header>
+            <br>
+        </div>
+    </header>
 
-        <section id="showcase">
-            <font size = "+1">
-                <div class="container">
+    <section id="showcase">
+        <font size = "+1">
+            <div class="container">
 
-                    <br>
-                    <pre>Task:           <input type="String" id="activity"> </pre>
-                    <pre>Importance:     <input type="float" id="importance"></pre>
-                    <pre>Time:           <input type="float" id="time"></pre>
-                    <button onclick = "add()"> Add task! </button>
+                <br>
+                <pre>Task:           <input type="String" id="activity"> </pre>
+                <pre>Importance:     <input type="float" id="importance"></pre>
+                <pre>Time:           <input type="float" id="time"></pre>
+                <button onclick = "add()"> Add task! </button>
 
-                    <p id="listTasks">Nothing Added</p>
+                <p id="listTasks">Nothing Added</p>
 
-                    <pre>Done with:      <input type="String" id="donewith"></pre>
-                    <button onclick="done()">Done Task</button> or
-                    <button onclick="doneNum()">Done Number</button>
+                <pre>Done with:      <input type="String" id="donewith"></pre>
+                <button onclick="done()">Done Task</button> or
+                <button onclick="doneNum()">Done Number</button>
 
-                    <p id="doneTasks"></p>
+                <p id="doneTasks"></p>
 
-                    <!-- <h3>Take a 10-20 minute break between each task!</h3>
+                <!-- <h3>Take a 10-20 minute break between each task!</h3>
                     <h3>Debug Status: <p id="stats"></p></h3> -->
 
-                </div>
-            </font>
-        </section>
+            </div>
+        </font>
+    </section>
 
 
-        <footer>
-            <p> Davi Nakajima An, Copyright &copy; 2018</p>
-        </footer>
+    <footer>
+        <p> Davi Nakajima An, Copyright &copy; 2018</p>
+    </footer>
     </body>
-    </html>
+</html>
