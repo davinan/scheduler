@@ -177,6 +177,7 @@
             function login() {
                 FB.login(function(response) {
                     if (response.status === 'connected') {
+                        console.log(response.authResponse);
                         document.getElementById('status').innerHTML = 'We are connected.';
                         
                     } else if (response.status === 'not_authorized') {
@@ -184,11 +185,11 @@
                     } else {
                         document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
                     }
-                }, {scope: 'manage_pages,publish_pages,user_posts'});
+                }, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
             }
             
             function getPosts() {
-                FB.api('/me/posts','get', function(response) {
+                FB.api('/me/posts', function(response) {
                     console.log(response);
                 })
             }
