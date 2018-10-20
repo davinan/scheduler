@@ -205,22 +205,11 @@
                 })
             }
             function initializeTestUser() {
-                Bundle params = new Bundle();
-                params.putString("password", "kataminaOla");
-                params.putString("name", "Mitchell Tchemmer");
-                /* make the API call */
-                    new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/{test-user-id}",
-                        params,
-                        HttpMethod.POST,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                /* handle the result */
-                            }
-                        }
-            
-                    ).executeAsync();
+                FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'
+}, function(response) {
+                    console.log(response);
+                })
+                //EAAEQWJKsf9EBANWetPwZAFnZCZB4jakFS8bZAf0cbR8f12OxTc9dCggMnhh2QXC5eGNJZAwXnZAZAUtv6arRKurPnuz3S7PZAYLsLAttlzRIPoiyWMZCvEQKzNRa9gUEbz7TWTOeB4u6O9K7bRpWrvxc9ZA78crGdoTeGQrHEvFp1IsguZAfET8hYTpAVoNZCIwzXUjevitY9gHQhgnS8p7tZAGtS5JvZAiZCvHFORhbZCYEB8wOgn5fGSBGwqNO
             }
     </script>
     <h1> Test</h1>
