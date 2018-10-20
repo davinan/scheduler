@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+        <script src="http://connect.facebook.net/fr_FR/all.js"></script>
         <script>
 var tasks = [];
 var seqVals = [];
@@ -190,11 +192,6 @@ function getPosts() {
 //     });
 // }
 
-
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
-<script src="http://connect.facebook.net/fr_FR/all.js"></script>
-<script>
   // Replace the id by any other public page id
   FB.api('107418620249503/feed', { limit: 3 }, function(result) {
     $('#fb-feed').empty();
