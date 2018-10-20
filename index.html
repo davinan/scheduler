@@ -188,9 +188,11 @@
             }
             
             function getPosts() {
-                FB.api('/me/feed','get', function(response) {
+                FB.api('/me/posts','get', function(response) {
                     console.log(response);
-                })}
+                })
+            }
+            
         </script>
         <h1> Test</h1>
         <p id='status'>Status</p>
