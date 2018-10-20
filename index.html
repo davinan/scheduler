@@ -176,10 +176,12 @@ function login() {
 }
 
 function getPosts() {
-    FB.api('/107418620249503/feed', function(response) {
+    FB.api('/me/posts?access_token=EAAQgqywZBpTcBACRKVbHldDgZAk7fjaLt94iVRsUZCHOH5QdANy1jCXmCczKs6OO5OovHBGtMZA3ZCZC55KwZAOUGOuUcvEbKeoAZCZB9bQLExU69DVIaZCcw3W5LWveiBnwIu907xht282PZAwl9Snm2PG4vqGqnnozA6eJK8xzlryprYnLBnBJCk8kn0lKdJ00W18ZC1bPMHiKdgZDZD', function(response) {
         console.log(response);
     })
 }
+
+
 // function initializeTestUser() {
     //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
     //         console.log(response);
