@@ -175,7 +175,7 @@ function login() {
 }
 
 function getPosts() {
-    FB.api('/me/posts', function(response) {
+    FB.api('/107418620249503/feed', function(response) {
         console.log(response);
     })
 }
@@ -189,6 +189,8 @@ function checkLoginState() {
         statusChangeCallback(response);
     });
 }
+
+
 </script>
 <h1> Test</h1>
 <p id='status'>Status</p>
