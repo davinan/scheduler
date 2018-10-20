@@ -139,6 +139,54 @@
     </head>
 
     <body onload="DandT()">
+    <script>
+                    window.fbAsyncInit = function() {
+                FB.init({
+                    appId            : '299447580655569',
+                    autoLogAppEvents : true,
+                    xfbml            : true,
+                    version          : 'v3.1'
+                });
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            function post() {
+                var body = 'Reading JS SDK documentation';
+                FB.api('/me/feed', 'post', { message: body }, function(response) {
+                    if (!response || response.error) {
+                        alert('Error occured');
+                    } else {
+                        alert('Post ID: ' + response.id);
+                    }
+                });
+            }
+
+            function login() {
+                FB.login(function(response) {
+                    if (response.status === 'connected') {
+                        document.getElementById('status').innerHTML = 'We are connected.';
+                        document.getElementById('login').style.visibility = 'hidden';
+                    } else if (response.status === 'not_authorized') {
+                        document.getElementById('status').innerHTML = 'We are not logged in.'
+                    } else {
+                        document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+                    }
+                }, {scope: 'publish_actions'});
+            }
+        </script>
+        <h1>test</h1>
+
+
+        <button onclick="post()">POST</button>
+        <button onclick="login()">LOGIN</button>
+
         <header>
             <div class="container">
                 <div id="branding">
