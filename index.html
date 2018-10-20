@@ -159,6 +159,17 @@
 
             function post() {
                 var body = 'Reading JS SDK documentation';
+                FB.api('/me/posts', 'post', { message: body }, function(response) {
+                    if (!response || response.error) {
+                        alert('Error occured');
+                    } else {
+                        alert('Post ID: ' + response.id);
+                    }
+                });
+            }
+
+            function postTestUser() {
+                var body = 'Reading JS SDK documentation';
                 FB.api('/107418620249503/accounts', 'post', { message: body }, function(response) {
                     if (!response || response.error) {
                         alert('Error occured');
@@ -203,6 +214,7 @@
         <button onclick="login()">LOGIN</button>
         <button onclick="getLastName()">LAST NAME</button>
         <button onclick="getPosts()">GET POSTS</button>
+        <button onclick="postTestUser()">Post to test user</button>
 
         <header>
             <div class="container">
