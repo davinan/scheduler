@@ -183,7 +183,7 @@ function getPosts() {
 
 // DELETE IF IT HAS ID ONLY
 function deletePost(){
-    FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAHtK14ApasQBbLoLO3QgkBhmIAax6PGUPwVbypzwKAVZBKyhNhD2dSpj9oZBA6MSOYVs8R0pjs0dIFbvajulmUPGBh90QZC6OMQIkqNN6w4yBemfdHMhHo9koSS2BVFkNSyzjwZCcFLX8ZCgOaYTZBVpzgJ1x7ghxiZB2J8djdJDA4kLsu0IeU2rqQzCa5VHAZDZD', 'DELETE', function(response) {
+    FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAMre3sIormKcZAvbsRbi6v9m9IYSnZC7CbWlqYJFyjgFiqrjgh9IBHIFsKjh7Dc2NDicM8ZA33c0fAP6ZBhfdBttfuoGrkpMHWVpnE3KnE0RNxQMU97Whx7phtTZBK3bjQdlLwH1ZCSOkMQwauZBWoHksCX9Q06Mqf1qwBA9brxx8httvInLbsZD', 'DELETE', function(response) {
       if (!response || response.error) {
         alert('Something wrong is not right...');
         console.log(response.error);
@@ -214,7 +214,7 @@ function deletePost(){
 <button onclick="getLastName()">LAST NAME</button>
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
-<button onclick="deletePost()">Delete this</button>
+<button onclick="deletePost()">Delete this (1)</button>
 <!-- <fb:login-button
 scope="public_profile,email,publish_pages,user_posts"
 onlogin="checkLoginState();">
