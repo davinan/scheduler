@@ -187,6 +187,7 @@
 
             function login() {
                 FB.login(function(response) {
+                    console.log(response);
                     if (response.status === 'connected') {
                         console.log(response.authResponse);
                         document.getElementById('status').innerHTML = 'We are connected.';
@@ -205,8 +206,7 @@
                 })
             }
             function initializeTestUser() {
-                FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'
-}, function(response) {
+                FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
                     console.log(response);
                 })
             }
