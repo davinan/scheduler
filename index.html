@@ -186,6 +186,7 @@ function deletePost(){
     FB.api('899836833535228_899870480198530', 'delete', function(response) {
       if (!response || response.error) {
         alert('Something wrong is not right...');
+        console.log(response.error);
       } else {
         alert('FUNCIONA BIRL');
       }
