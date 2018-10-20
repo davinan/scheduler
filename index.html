@@ -1,146 +1,120 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script>
-    var tasks = [];
-    var seqVals = [];
-    var count = 0;
-    var doneTasks = []; //done = false; pending = true; --> had to change because default is true
-    var doneidx = [];
-    var debugStatus = document.getElementById("stats");
+    <head>
+        <script>
+var tasks = [];
+var seqVals = [];
+var count = 0;
+var doneTasks = []; //done = false; pending = true; --> had to change because default is true
+var doneidx = [];
+var debugStatus = document.getElementById("stats");
 
-
-    //window.onload = loadCookies();
-    // function saveCookies(){
-    //     var i = 0;
-    //     for(i = 0; i < tasks.length; i++){
-    //         var tk = tasks[i].split(" ");
-    //         if(tk[tk.length-1] != "(Done)"){
-    //             setCookie(tasks[i], i);
-    //             setCookie(seqVals[i], i);
-    //         }
-    //     }
-    // }
-    // function setCookie(cvalue, i){
-    //     document.cookie = cvalue + ";";
-    // }
-    // function loadCookies(){
-    //     var decodedCookie = decodeURIComponent(document.cookie);
-    //     var ca = decodedCookie.split(';');
-    //     var i = 0; // todo: Make cookies work
-    //     for(i = 0; i < (ca/2); i++){
-    //         tasks[i] = ca[i];
-    //         seqVals[i] = ca[i+1];
-    //         i++;
-    //     }
-    //     updateTasks();
-    // }
-    function DandT() {
-        var agr = new Date(),
+function DandT() {
+    var agr = new Date(),
         months = ['January', 'February', 'March', 'April', 'May',
-        'June', 'July', 'August', 'September', 'Auguts', 'November',
-        'December'];
-        if(agr.getMinutes()<10){
-            time = agr.getHours() + ':0' + agr.getMinutes();
+            'June', 'July', 'August', 'September', 'Auguts', 'November',
+            'December'];
+    if(agr.getMinutes()<10){
+        time = agr.getHours() + ':0' + agr.getMinutes();
+    }
+    else{
+        time = agr.getHours() + ':' + agr.getMinutes();
+    }
+
+    date = [agr.getDate(),
+        months[agr.getMonth()], agr.getFullYear()].join(' ');
+
+    document.getElementById('dAndT').innerHTML = [date, time].join(' / ');
+    setTimeout(DandT, 1000);
+}
+
+function add(){
+    var task = document.getElementById("activity");
+    var imp = document.getElementById("importance");
+    var time = document.getElementById("time");
+
+    tasks[tasks.length] = task.value;
+    seqVals[seqVals.length] = imp.value/time.value;
+    doneidx[doneidx.length] = true;
+    sortArrays();
+    updateTasks();
+    // saveCookies();
+}
+
+function updateTasks(){
+    var display = document.getElementById("listTasks");
+    var text = "<ol type=\"1\">";
+    var i = 0;
+    for (i = 0; i < tasks.length; i++) {
+        text += "<li>" + tasks[i] + "</li>";
+    }
+    text += "</ol>";
+    display.innerHTML = text;
+}
+
+function updateDone(){
+    var text = "<ol type=\"1\">";
+    var i=0;
+    for (i = 0; i < doneTasks.length; i++) {
+        text += "<li>" + doneTasks[i] + "</li>";
+    }
+    text +="</ol>";
+    document.getElementById("doneTasks").innerHTML = text;
+    updateTasks();
+}
+
+function sortArrays(){
+    var j = 0;
+    for(j = seqVals.length - 1; j > 0; j--){
+        if(seqVals[j] > seqVals[j-1]) {
+            var temp = seqVals[j];
+            seqVals[j] = seqVals[j-1];
+            seqVals[j-1] = temp;
+            temp = tasks[j];
+            tasks[j] = tasks[j-1];
+            tasks[j-1] = temp;
+            if(doneidx[j]!=doneidx[j-1]){
+                doneidx[j] = !doneidx[j];
+                doneidx[j-1] = !doneidx[j-1];
+            }
         }
         else{
-            time = agr.getHours() + ':' + agr.getMinutes();
+            break;
         }
+    }
+}
 
-        date = [agr.getDate(),
-            months[agr.getMonth()], agr.getFullYear()].join(' ');
-
-            document.getElementById('dAndT').innerHTML = [date, time].join(' / ');
-            setTimeout(DandT, 1000);
+function done(){
+    var tsk = document.getElementById("donewith").value;
+    var k = 0;
+    for(k = 0; k < tasks.length; k++){
+        if(tsk == tasks[k]){
+            doneTasks[doneTasks.length] = tasks[k];
+            tasks[k] += " <b><i>(Done)</i></b>";
+            doneidx[k] = false;
+            break;
         }
-
-        function add(){
-            var task = document.getElementById("activity");
-            var imp = document.getElementById("importance");
-            var time = document.getElementById("time");
-
-            tasks[tasks.length] = task.value;
-            seqVals[seqVals.length] = imp.value/time.value;
-            doneidx[doneidx.length] = true;
-            sortArrays();
-            updateTasks();
-            // saveCookies();
-        }
-
-        function updateTasks(){
-            var display = document.getElementById("listTasks");
-            var text = "<ol type=\"1\">";
-            var i = 0;
-            for (i = 0; i < tasks.length; i++) {
-                text += "<li>" + tasks[i] + "</li>";
-            }
-            text += "</ol>";
-            display.innerHTML = text;
-        }
-
-        function updateDone(){
-            var text = "<ol type=\"1\">";
-            var i=0;
-            for (i = 0; i < doneTasks.length; i++) {
-                text += "<li>" + doneTasks[i] + "</li>";
-            }
-            text +="</ol>";
-            document.getElementById("doneTasks").innerHTML = text;
-            updateTasks();
-        }
-
-        function sortArrays(){
-            var j = 0;
-            for(j = seqVals.length - 1; j > 0; j--){
-                if(seqVals[j] > seqVals[j-1]) {
-                    var temp = seqVals[j];
-                    seqVals[j] = seqVals[j-1];
-                    seqVals[j-1] = temp;
-                    temp = tasks[j];
-                    tasks[j] = tasks[j-1];
-                    tasks[j-1] = temp;
-                    if(doneidx[j]!=doneidx[j-1]){
-                        doneidx[j] = !doneidx[j];
-                        doneidx[j-1] = !doneidx[j-1];
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-        }
-
-        function done(){
-            var tsk = document.getElementById("donewith").value;
-            var k = 0;
-            for(k = 0; k < tasks.length; k++){
-                if(tsk == tasks[k]){
-                    doneTasks[doneTasks.length] = tasks[k];
-                    tasks[k] += " <b><i>(Done)</i></b>";
-                    doneidx[k] = false;
-                    break;
-                }
-            }
-            updateDone();
-        }
-        function doneNum(){
-            var tsk = document.getElementById("donewith").value;
-            idx = Number(tsk)-1;
-            if(doneidx[idx]){
-                doneTasks[doneTasks.length] = tasks[idx];
-                tasks[idx] += " <b><i>(Done)</i></b>"
-                doneidx[idx] = false;
-                updateDone();
-                // saveCookies();
-            }
-        }
+    }
+    updateDone();
+}
+function doneNum(){
+    var tsk = document.getElementById("donewith").value;
+    idx = Number(tsk)-1;
+    if(doneidx[idx]){
+        doneTasks[doneTasks.length] = tasks[idx];
+        tasks[idx] += " <b><i>(Done)</i></b>"
+        doneidx[idx] = false;
+        updateDone();
+        // saveCookies();
+    }
+}
         </script>
         <link rel="stylesheet" href = "static/stylesheet.css">
     </head>
 
     <body onload="DandT()">
-    <script>
-                    window.fbAsyncInit = function() {
+        <script>
+            window.fbAsyncInit = function() {
                 FB.init({
                     appId            : '299447580655569',
                     autoLogAppEvents : true,
@@ -149,116 +123,121 @@
                 });
             };
 
-            (function(d, s, id){
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {return;}
-                js = d.createElement(s); js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
-            function post() {
-                var body = 'Reading JS SDK documentation';
-                FB.api('/me/posts', 'post', { message: body }, function(response) {
-                    if (!response || response.error) {
-                        alert('Error occured');
-                    } else {
-                        alert('Post ID: ' + response.id);
-                    }
-                });
-            }
+function post() {
+    var body = 'Reading JS SDK documentation';
+    FB.api('/me/posts', 'post', { message: body }, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+        } else {
+            alert('Post ID: ' + response.id);
+        }
+    });
+}
 
-            function postTestUser() {
-                var body = 'Reading JS SDK documentation';
-                FB.api('/107418620249503/accounts', 'post', { message: body }, function(response) {
-                    if (!response || response.error) {
-                        alert('Error occured');
-                    } else {
-                        alert('Post ID: ' + response.id);
-                    }
-                });
-            }
-            
-            function getLastName() {
-                FB.api('/me', {fields: 'last_name'}, function(response) {
-                    console.log(response);
-                });
-            }
+function postTestUser() {
+    var body = 'Reading JS SDK documentation';
+    FB.api('/107418620249503/accounts', 'post', { message: body }, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+        } else {
+            alert('Post ID: ' + response.id);
+        }
+    });
+}
 
-            function login() {
-                FB.login(function(response) {
-                    console.log(response);
-                    if (response.status === 'connected') {
-                        console.log(response.authResponse);
-                        document.getElementById('status').innerHTML = 'We are connected.';
-                        
-                    } else if (response.status === 'not_authorized') {
-                        document.getElementById('status').innerHTML = 'We are not logged in.'
-                    } else {
-                        document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
-                    }
-                }, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
-            }
-            
-            function getPosts() {
-                FB.api('/me/posts', function(response) {
-                    console.log(response);
-                })
-            }
-            // function initializeTestUser() {
-            //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
-            //         console.log(response);
-            //     })
-            // }
-    </script>
-    <h1> Test</h1>
-    <p id='status'>Status</p>
+function getLastName() {
+    FB.api('/me', {fields: 'last_name'}, function(response) {
+        console.log(response);
+    });
+}
 
-    <button onclick="post()">POST</button>
-    <button onclick="login()">LOGIN</button>
-    <button onclick="getLastName()">LAST NAME</button>
-    <button onclick="getPosts()">GET POSTS</button>
-    <button onclick="postTestUser()">Post to test user</button>
-    <!-- <button onclick="initializeTestUser()">Init test user</button> -->
+function login() {
+    FB.login(function(response) {
+        console.log(response);
+        if (response.status === 'connected') {
+            console.log(response.authResponse);
+            document.getElementById('status').innerHTML = 'We are connected.';
 
-    <header>
-        <div class="container">
-            <div id="branding">
-                <font size="+1"><h1 id="scheduler"><img src="static/logo.png" alt="DNA" height="40" id="logoimg"></span><span class= "bad"> Scheduler</span></h1></font>
-                <font color="white" size="+1"><h1 id="dAndT"></h1></font>
-            </div>
-            <br>
-        </div>
-    </header>
+        } else if (response.status === 'not_authorized') {
+            document.getElementById('status').innerHTML = 'We are not logged in.'
+        } else {
+            document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+        }
+    }, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
+}
 
-    <section id="showcase">
-        <font size = "+1">
+function getPosts() {
+    FB.api('/me/posts', function(response) {
+        console.log(response);
+    })
+}
+// function initializeTestUser() {
+    //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
+    //         console.log(response);
+    //     })
+    // }
+        </script>
+        <h1> Test</h1>
+        <p id='status'>Status</p>
+
+        <button onclick="post()">POST</button>
+        <button onclick="login()">LOGIN</button>
+        <button onclick="getLastName()">LAST NAME</button>
+        <button onclick="getPosts()">GET POSTS</button>
+        <button onclick="postTestUser()">Post to test user</button>
+        <fb:login-button
+                scope="public_profile,email,publish_pages,user_posts"
+                onlogin="checkLoginState();" onclick="login()">
+                Login
+        </fb:login-button>
+        <!-- <button onclick="initializeTestUser()">Init test user</button> -->
+
+        <header>
             <div class="container">
-
+                <div id="branding">
+                    <font size="+1"><h1 id="scheduler"><img src="static/logo.png" alt="DNA" height="40" id="logoimg"></span><span class= "bad"> Scheduler</span></h1></font>
+                    <font color="white" size="+1"><h1 id="dAndT"></h1></font>
+                </div>
                 <br>
-                <pre>Task:           <input type="String" id="activity"> </pre>
-                <pre>Importance:     <input type="float" id="importance"></pre>
-                <pre>Time:           <input type="float" id="time"></pre>
-                <button onclick = "add()"> Add task! </button>
-
-                <p id="listTasks">Nothing Added</p>
-
-                <pre>Done with:      <input type="String" id="donewith"></pre>
-                <button onclick="done()">Done Task</button> or
-                <button onclick="doneNum()">Done Number</button>
-
-                <p id="doneTasks"></p>
-
-                <!-- <h3>Take a 10-20 minute break between each task!</h3>
-                    <h3>Debug Status: <p id="stats"></p></h3> -->
-
             </div>
-        </font>
-    </section>
+        </header>
+
+        <section id="showcase">
+            <font size = "+1">
+                <div class="container">
+
+                    <br>
+                    <pre>Task:           <input type="String" id="activity"> </pre>
+                    <pre>Importance:     <input type="float" id="importance"></pre>
+                    <pre>Time:           <input type="float" id="time"></pre>
+                    <button onclick = "add()"> Add task! </button>
+
+                    <p id="listTasks">Nothing Added</p>
+
+                    <pre>Done with:      <input type="String" id="donewith"></pre>
+                    <button onclick="done()">Done Task</button> or
+                    <button onclick="doneNum()">Done Number</button>
+
+                    <p id="doneTasks"></p>
+
+                    <!-- <h3>Take a 10-20 minute break between each task!</h3>
+                        <h3>Debug Status: <p id="stats"></p></h3> -->
+
+                </div>
+            </font>
+        </section>
 
 
-    <footer>
-        <p> Davi Nakajima An, Copyright &copy; 2018</p>
-    </footer>
+        <footer>
+            <p> Davi Nakajima An, Copyright &copy; 2018</p>
+        </footer>
     </body>
 </html>
