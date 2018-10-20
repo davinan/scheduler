@@ -205,11 +205,11 @@
                     console.log(response);
                 })
             }
-            function initializeTestUser() {
-                FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
-                    console.log(response);
-                })
-            }
+            // function initializeTestUser() {
+            //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
+            //         console.log(response);
+            //     })
+            // }
     </script>
     <h1> Test</h1>
     <p id='status'>Status</p>
@@ -219,7 +219,7 @@
     <button onclick="getLastName()">LAST NAME</button>
     <button onclick="getPosts()">GET POSTS</button>
     <button onclick="postTestUser()">Post to test user</button>
-    <button onclick="initializeTestUser()">Init test user</button>
+    <!-- <button onclick="initializeTestUser()">Init test user</button> -->
 
     <header>
         <div class="container">
