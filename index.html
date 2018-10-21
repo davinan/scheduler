@@ -132,11 +132,16 @@ function doneNum(){
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+
 function post() {
     var body = 'Reading JS SDK documentation';
     FB.api('/me/posts', 'post', { message: body }, function(response) {
         if (!response || response.error) {
             alert('Error occured');
+            console.log(response.error);
         } else {
             alert('Post ID: ' + response.id);
         }
@@ -171,19 +176,30 @@ function login() {
             document.getElementById('status').innerHTML = 'We are not logged in.'
         } else {
             document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
-        }
-    });//;, {scope: 'manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
+        } }
+    , {scope: 'pages_manage_cta,manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
 }
 
 function getPosts() {
-    FB.api('/me/posts?access_token=EAAQgqywZBpTcBAHtK14ApasQBbLoLO3QgkBhmIAax6PGUPwVbypzwKAVZBKyhNhD2dSpj9oZBA6MSOYVs8R0pjs0dIFbvajulmUPGBh90QZC6OMQIkqNN6w4yBemfdHMhHo9koSS2BVFkNSyzjwZCcFLX8ZCgOaYTZBVpzgJ1x7ghxiZB2J8djdJDA4kLsu0IeU2rqQzCa5VHAZDZD', function(response) {
+    // FB.api('/me/posts?access_token=EAAQgqywZBpTcBAHtK14ApasQBbLoLO3QgkBhmIAax6PGUPwVbypzwKAVZBKyhNhD2dSpj9oZBA6MSOYVs8R0pjs0dIFbvajulmUPGBh90QZC6OMQIkqNN6w4yBemfdHMhHo9koSS2BVFkNSyzjwZCcFLX8ZCgOaYTZBVpzgJ1x7ghxiZB2J8djdJDA4kLsu0IeU2rqQzCa5VHAZDZD', function(response) {
+    //     console.log(response);
+    // })
+    FB.api('/me/posts', function(response) {
         console.log(response);
     })
 }
 
 // DELETE IF IT HAS ID ONLY
 function deletePost(){
-    FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAPNZCZAKVDd9qVSPaVJWiTRJLOhvZAd4ltijPwZCUq0DJyojfr4i8SqNIZA1ciLBkSHZCcbEcBjNUsDVuAHOKHb2aDjUcxuDMZBvZBeFOPYOfVllK6wzcbwkBZCcnIxJLaQRwo0GpzGbFyB2M1SKoeKucBbY94ZA54Es46ZAaj4vD4ZAhMsuCJgkcluUKe0yrKp1i5fZBxrZAU3QtQeOmCFZCm4ngTFKrFe0lQr9wZDZD', 'DELETE', function(response) {
+    // FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAPNZCZAKVDd9qVSPaVJWiTRJLOhvZAd4ltijPwZCUq0DJyojfr4i8SqNIZA1ciLBkSHZCcbEcBjNUsDVuAHOKHb2aDjUcxuDMZBvZBeFOPYOfVllK6wzcbwkBZCcnIxJLaQRwo0GpzGbFyB2M1SKoeKucBbY94ZA54Es46ZAaj4vD4ZAhMsuCJgkcluUKe0yrKp1i5fZBxrZAU3QtQeOmCFZCm4ngTFKrFe0lQr9wZDZD', 'DELETE', function(response) {
+    //   if (!response || response.error) {
+    //     alert('Something wrong is not right...');
+    //     console.log(response.error);
+    //   } else {
+    //     alert('FUNCIONA BIRL');
+    //   }
+    // });
+    FB.api('/899836833535228_899870480198530', 'DELETE', function(response) {
       if (!response || response.error) {
         alert('Something wrong is not right...');
         console.log(response.error);
@@ -192,6 +208,7 @@ function deletePost(){
       }
     });
 }
+
 
 
 // function initializeTestUser() {
@@ -215,6 +232,8 @@ function deletePost(){
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
 <button onclick="deletePost()">Delete this (4)</button>
+<fb:login-button scope="user_posts,pages_manage_cta" onlogin="checkLoginState();">
+</fb:login-button>
 <!-- <fb:login-button
 scope="public_profile,email,publish_pages,user_posts"
 onlogin="checkLoginState();">
