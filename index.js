@@ -18,23 +18,25 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
+   FB.getLoginStatus(function(response) {
+       statusChangeCallback(response);
+   });
 
-function login() {
-    FB.login(function(response) {
-        console.log(response);
-        if (response.status === 'connected') {
-            console.log(response.authResponse);
-            document.getElementById('status').innerHTML = 'We are connected.';
-        } else if (response.status === 'not_authorized') {
-            document.getElementById('status').innerHTML = 'We are not logged in.'
-        } else {
-            document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
-        } }
-        , {scope: 'pages_manage_cta,manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
+// function login() {
+//     FB.login(function(response) {
+//         console.log(response);
+//         if (response.status === 'connected') {
+//             console.log(response.authResponse);
+//             document.getElementById('status').innerHTML = 'We are connected.';
+//         } else if (response.status === 'not_authorized') {
+//             document.getElementById('status').innerHTML = 'We are not logged in.'
+//         } else {
+//             document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+//         } }
+//         , {scope: 'pages_manage_cta,manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
 
-        startWithName();
-
-}
+//         startWithName();
+// }
 
 function getPosts() {
 FB.api('/me/posts', function(response) {
@@ -42,11 +44,6 @@ FB.api('/me/posts', function(response) {
     generateBoxes(response);
 })
 }
-
-
-
-
-
 
 function startWithName() {
 // Will handle the HTTP response for the name of the person and their id
@@ -57,7 +54,6 @@ function startWithName() {
         welcome.innerHTML = "Hi, " + response.name + "!"
         document.appendChild(welcome);
     });
-
 
 // Will handle the second request for number of friends
     FB.api('/me/friends', {fields: 'summary'}, function(response) {
@@ -70,10 +66,6 @@ function startWithName() {
     getPosts();
 }
 
-
-
-
-
 function viewPost(post){
 
     postId = post.id;
@@ -81,10 +73,6 @@ function viewPost(post){
     window.open("https://facebook.com/me/" + postId);
 
 }
-
-
-
-
 
 function generateBox(id, time, contents){
 
@@ -108,9 +96,6 @@ function generateBox(id, time, contents){
 
     document.getElementById("posts").appendChild(div);
 }
-
-
-
 
 function generateBoxes(response) {
     // Iterate through the words and see which have the kwy words. If it does have any, create the element in HTML
@@ -150,4 +135,6 @@ function generateBoxes(response) {
         myScore.innerHTML = "Posts Analyzed: " + str(score);
         document.getElementById("counters").appendChild(myScore);
     }
+
+    
 }
