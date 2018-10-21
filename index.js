@@ -5,9 +5,9 @@
       xfbml      : true,
       version    : 'v3.1'
   });
-    
+
     FB.AppEvents.logPageView();   
-    
+
 };
 
 (function(d, s, id){
@@ -103,9 +103,12 @@ function generateBoxes(response) {
     analyzed = 0;
     score = 0;
     for (i=0; i<100; i++){
-        time = response.data(i).created_time;
-        message = response.data(i).message;
-        id = response.data(i).id;
+        console.log("estou aqui no for loop");
+        console.log(response.)
+        time = response.data[i].created_time;
+        console.log(time);
+        message = response.data[i].message;
+        id = response.data[i].id;
         list = ['the', 'oi'];
 
         for (word in list){
@@ -136,5 +139,5 @@ function generateBoxes(response) {
         document.getElementById("counters").appendChild(myScore);
     }
 
-    
+
 }
