@@ -4,23 +4,23 @@
       cookie     : true,
       xfbml      : true,
       version    : 'v3.1'
-    });
-      
+  });
+    
     FB.AppEvents.logPageView();   
-      
-  };
+    
+};
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+(function(d, s, id){
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement(s); js.id = id;
+   js.src = "https://connect.facebook.net/en_US/sdk.js";
+   fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
-   FB.getLoginStatus(function(response) {
-       statusChangeCallback(response);
-   });
+FB.getLoginStatus(function(response) {
+ statusChangeCallback(response);
+});
 
 // function login() {
 //     FB.login(function(response) {
@@ -39,31 +39,31 @@
 // }
 
 function getPosts() {
-FB.api('/me/posts', function(response) {
-    console.log(response);
-    generateBoxes(response);
-})
+    FB.api('/me/posts', function(response) {
+        console.log(response);
+        generateBoxes(response);
+    })
 }
 
 function startWithName() {
 // Will handle the HTTP response for the name of the person and their id
-    FB.api('/me', function(response) {
-        var welcome = document.createElement("p");
-        welcome.id = "welcome";
-        welcome.class = "welcome";
-        welcome.innerHTML = "Hi, " + response.name + "!"
-        document.appendChild(welcome);
-    });
+FB.api('/me', function(response) {
+    var welcome = document.createElement("p");
+    welcome.id = "welcome";
+    welcome.class = "welcome";
+    welcome.innerHTML = "Hi, " + response.name + "!"
+    document.appendChild(welcome);
+});
 
 // Will handle the second request for number of friends
-    FB.api('/me/friends', {fields: 'summary'}, function(response) {
-        var welcome1 = document.createElement("p");
-        welcome1.id = "welcome1";
-        welcome1.innerHTML = "What do you think about removing your Facebook posts that can be, humm, controversial? Your " + response.summary.total_count + " friends and future connections/employers would really like that!";
-        document.appendChild(welcome1);
-    });
+FB.api('/me/friends', {fields: 'summary'}, function(response) {
+    var welcome1 = document.createElement("p");
+    welcome1.id = "welcome1";
+    welcome1.innerHTML = "What do you think about removing your Facebook posts that can be, humm, controversial? Your " + response.summary.total_count + " friends and future connections/employers would really like that!";
+    document.appendChild(welcome1);
+});
 
-    getPosts();
+getPosts();
 }
 
 function viewPost(post){
