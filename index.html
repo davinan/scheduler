@@ -183,7 +183,7 @@ function getPosts() {
 
 // DELETE IF IT HAS ID ONLY
 function deletePost(){
-    FB.api('https://graph.facebook.com/899836833535228_899870480198530', 'delete', function(response) {
+    FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAPNZCZAKVDd9qVSPaVJWiTRJLOhvZAd4ltijPwZCUq0DJyojfr4i8SqNIZA1ciLBkSHZCcbEcBjNUsDVuAHOKHb2aDjUcxuDMZBvZBeFOPYOfVllK6wzcbwkBZCcnIxJLaQRwo0GpzGbFyB2M1SKoeKucBbY94ZA54Es46ZAaj4vD4ZAhMsuCJgkcluUKe0yrKp1i5fZBxrZAU3QtQeOmCFZCm4ngTFKrFe0lQr9wZDZD', 'delete', function(response) {
       if (!response || response.error) {
         alert('Something wrong is not right...');
         console.log(response.error);
@@ -214,7 +214,7 @@ function deletePost(){
 <button onclick="getLastName()">LAST NAME</button>
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
-<button onclick="deletePost()">Delete this (2)</button>
+<button onclick="deletePost()">Delete this (3)</button>
 <!-- <fb:login-button
 scope="public_profile,email,publish_pages,user_posts"
 onlogin="checkLoginState();">
