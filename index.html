@@ -209,7 +209,27 @@ function deletePost(){
     });
 }
 
+function testPHP() {
+    var ola = <?php
+try {
+    $conn = new PDO("sqlsrv:server = tcp:shamehub.database.windows.net,1433; Database = Words", "lucaskatayama", "Katayama2018");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
+}
 
+// SQL Server Extension Sample Code:
+$connectionInfo = array("UID" => "lucaskatayama@shamehub", "pwd" => "Katayama2018", "Database" => "Words", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$serverName = "tcp:shamehub.database.windows.net,1433";
+$conn = sqlsrv_connect($serverName, $connectionInfo);
+
+echo"connected";
+?>
+
+console.log(ola);
+}
 
 // function initializeTestUser() {
     //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
@@ -227,11 +247,12 @@ function deletePost(){
 <p id='status'>Status</p>
 
 <button onclick="post()">POST</button>
-<button onclick="login()">LOGIN</button>
+<!-- <button onclick="login()">LOGIN</button> -->
 <button onclick="getLastName()">LAST NAME</button>
 <button onclick="getPosts()">GET POSTS</button>
 <button onclick="postTestUser()">Post to test user</button>
 <button onclick="deletePost()">Delete this (6)</button>
+<button onclick="testPHP()">Test PHP connection</button>
 <fb:login-button scope="user_posts,pages_manage_cta" onlogin="checkLoginState();">
 </fb:login-button>
 <!-- <fb:login-button
