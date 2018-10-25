@@ -1,32 +1,305 @@
-<!DOCTYPE = html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+// const request = require('request-promise');  
+var tasks = [];
+var seqVals = [];
+var count = 0;
+var doneTasks = []; //done = false; pending = true; --> had to change because default is true
+var doneidx = [];
+var debugStatus = document.getElementById("stats");
 
-<head>
-    <meta charset="utf-8">
-    <title>Shame Hub</title>
-    <link rel="stylesheet" href="style.css">
-    
-</head>
-<body>
-<script src="index.js"></script>
+function DandT() {
+    var agr = new Date(),
+        months = ['January', 'February', 'March', 'April', 'May',
+            'June', 'July', 'August', 'September', 'Auguts', 'November',
+            'December'];
+    if(agr.getMinutes()<10){
+        time = agr.getHours() + ':0' + agr.getMinutes();
+    }
+    else{
+        time = agr.getHours() + ':' + agr.getMinutes();
+    }
 
-    <div class="hub">
-        <span contenteditable="false">Shame</span>
-        <span contenteditable="false">Hub</span>
+    date = [agr.getDate(),
+        months[agr.getMonth()], agr.getFullYear()].join(' ');
+
+    document.getElementById('dAndT').innerHTML = [date, time].join(' / ');
+    setTimeout(DandT, 1000);
+}
+
+function add(){
+    var task = document.getElementById("activity");
+    var imp = document.getElementById("importance");
+    var time = document.getElementById("time");
+
+    tasks[tasks.length] = task.value;
+    seqVals[seqVals.length] = imp.value/time.value;
+    doneidx[doneidx.length] = true;
+    sortArrays();
+    updateTasks();
+    // saveCookies();
+}
+
+function updateTasks(){
+    var display = document.getElementById("listTasks");
+    var text = "<ol type=\"1\">";
+    var i = 0;
+    for (i = 0; i < tasks.length; i++) {
+        text += "<li>" + tasks[i] + "</li>";
+    }
+    text += "</ol>";
+    display.innerHTML = text;
+}
+
+function updateDone(){
+    var text = "<ol type=\"1\">";
+    var i=0;
+    for (i = 0; i < doneTasks.length; i++) {
+        text += "<li>" + doneTasks[i] + "</li>";
+    }
+    text +="</ol>";
+    document.getElementById("doneTasks").innerHTML = text;
+    updateTasks();
+}
+
+function sortArrays(){
+    var j = 0;
+    for(j = seqVals.length - 1; j > 0; j--){
+        if(seqVals[j] > seqVals[j-1]) {
+            var temp = seqVals[j];
+            seqVals[j] = seqVals[j-1];
+            seqVals[j-1] = temp;
+            temp = tasks[j];
+            tasks[j] = tasks[j-1];
+            tasks[j-1] = temp;
+            if(doneidx[j]!=doneidx[j-1]){
+                doneidx[j] = !doneidx[j];
+                doneidx[j-1] = !doneidx[j-1];
+            }
+        }
+        else{
+            break;
+        }
+    }
+}
+
+function done(){
+    var tsk = document.getElementById("donewith").value;
+    var k = 0;
+    for(k = 0; k < tasks.length; k++){
+        if(tsk == tasks[k]){
+            doneTasks[doneTasks.length] = tasks[k];
+            tasks[k] += " <b><i>(Done)</i></b>";
+            doneidx[k] = false;
+            break;
+        }
+    }
+    updateDone();
+}
+function doneNum(){
+    var tsk = document.getElementById("donewith").value;
+    idx = Number(tsk)-1;
+    if(doneidx[idx]){
+        doneTasks[doneTasks.length] = tasks[idx];
+        tasks[idx] += " <b><i>(Done)</i></b>"
+        doneidx[idx] = false;
+        updateDone();
+        // saveCookies();
+    }
+}
+        </script>
+        <link rel="stylesheet" href = "static/stylesheet.css">
+    </head>
+
+    <body onload="DandT()">
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId            : '299447580655569',
+                    autoLogAppEvents : true,
+                    xfbml            : true,
+                    version          : 'v3.1'
+                });
+            };
+
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+});
+
+function post() {
+    var body = 'Reading JS SDK documentation';
+    FB.api('/me/posts', 'post', { message: body }, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+            console.log(response.error);
+        } else {
+            alert('Post ID: ' + response.id);
+        }
+    });
+}
+
+function postTestUser() {
+    var body = 'Testing Facebook App';
+    FB.api('/me/posts?access_token=EAAQgqywZBpTcBAHtK14ApasQBbLoLO3QgkBhmIAax6PGUPwVbypzwKAVZBKyhNhD2dSpj9oZBA6MSOYVs8R0pjs0dIFbvajulmUPGBh90QZC6OMQIkqNN6w4yBemfdHMhHo9koSS2BVFkNSyzjwZCcFLX8ZCgOaYTZBVpzgJ1x7ghxiZB2J8djdJDA4kLsu0IeU2rqQzCa5VHAZDZD', 'post', { message: body }, function(response) {
+        if (!response || response.error) {
+            alert('Error occured');
+        } else {
+            alert('Post ID: ' + response.id);
+        }
+    });
+}
+
+function getLastName() {
+    FB.api('/me', {fields: 'last_name'}, function(response) {
+        console.log(response);
+    });
+}
+
+function login() {
+    FB.login(function(response) {
+        console.log(response);
+        if (response.status === 'connected') {
+            console.log(response.authResponse);
+            document.getElementById('status').innerHTML = 'We are connected.';
+
+        } else if (response.status === 'not_authorized') {
+            document.getElementById('status').innerHTML = 'We are not logged in.'
+        } else {
+            document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+        } }
+    , {scope: 'pages_manage_cta,manage_pages,publish_pages,user_posts', enable_profile_selector: true, return_scopes: true});
+}
+
+function getPosts() {
+    // FB.api('/me/posts?access_token=EAAQgqywZBpTcBAHtK14ApasQBbLoLO3QgkBhmIAax6PGUPwVbypzwKAVZBKyhNhD2dSpj9oZBA6MSOYVs8R0pjs0dIFbvajulmUPGBh90QZC6OMQIkqNN6w4yBemfdHMhHo9koSS2BVFkNSyzjwZCcFLX8ZCgOaYTZBVpzgJ1x7ghxiZB2J8djdJDA4kLsu0IeU2rqQzCa5VHAZDZD', function(response) {
+    //     console.log(response);
+    // })
+    FB.api('/me/posts', function(response) {
+        console.log(response);
+    })
+}
+
+// DELETE IF IT HAS ID ONLY
+function deletePost(){
+    // FB.api('/899836833535228_899870480198530?access_token=EAAQgqywZBpTcBAPNZCZAKVDd9qVSPaVJWiTRJLOhvZAd4ltijPwZCUq0DJyojfr4i8SqNIZA1ciLBkSHZCcbEcBjNUsDVuAHOKHb2aDjUcxuDMZBvZBeFOPYOfVllK6wzcbwkBZCcnIxJLaQRwo0GpzGbFyB2M1SKoeKucBbY94ZA54Es46ZAaj4vD4ZAhMsuCJgkcluUKe0yrKp1i5fZBxrZAU3QtQeOmCFZCm4ngTFKrFe0lQr9wZDZD', 'DELETE', function(response) {
+    //   if (!response || response.error) {
+    //     alert('Something wrong is not right...');
+    //     console.log(response.error);
+    //   } else {
+    //     alert('FUNCIONA BIRL');
+    //   }
+    // });
+    FB.api('/899874453531466_899870480198530', 'DELETE', function(response) {
+      if (!response || response.error) {
+        alert('Something wrong is not right...');
+        console.log(response.error);
+      } else {
+        alert('FUNCIONA BIRL');
+      }
+    });
+}
+
+function testPHP() {
+    var ola = <?php
+try {
+    $conn = new PDO("sqlsrv:server = tcp:shamehub.database.windows.net,1433; Database = Words", "lucaskatayama", "Katayama2018");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
+}
+
+// SQL Server Extension Sample Code:
+$connectionInfo = array("UID" => "lucaskatayama@shamehub", "pwd" => "Katayama2018", "Database" => "Words", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$serverName = "tcp:shamehub.database.windows.net,1433";
+$conn = sqlsrv_connect($serverName, $connectionInfo);
+
+echo"connected";
+?>
+
+console.log(ola);
+}
+
+// function initializeTestUser() {
+    //     FB.api('/v3.1/107418620249503', 'post',  {password='katamina', name='Mitchell Tchemmer'}, function(response) {
+    //         console.log(response);
+    //     })
+    // }
+// function checkLoginState() {
+//       FB.getLoginStatus(function(response) {
+//         statusChangeCallback(response);
+//     });
+// }
+</script>
+
+<!-- <h1> Test</h1>
+<p id='status'>Status</p>
+
+<button onclick="post()">POST</button> -->
+<!-- <button onclick="login()">LOGIN</button> -->
+<!-- <button onclick="getLastName()">LAST NAME</button>
+<button onclick="getPosts()">GET POSTS</button>
+<button onclick="postTestUser()">Post to test user</button>
+<button onclick="deletePost()">Delete this (6)</button>
+<button onclick="testPHP()">Test PHP connection</button> -->
+<!-- <fb:login-button scope="user_posts,pages_manage_cta" onlogin="checkLoginState();">
+</fb:login-button> -->
+<!-- <fb:login-button
+scope="public_profile,email,publish_pages,user_posts"
+onlogin="checkLoginState();">
+Login
+</fb:login-button> -->
+<!-- <button onclick="initializeTestUser()">Init test user</button> -->
+
+<header>
+    <div class="container">
+        <div id="branding">
+            <font size="+1"><h1 id="scheduler"><img src="static/logo.png" alt="DNA" height="40" id="logoimg"></span><span class= "bad"> Scheduler</span></h1></font>
+            <font color="white" size="+1"><h1 id="dAndT"></h1></font>
+        </div>
+        <br>
     </div>
+</header>
+
+<section id="showcase">
+    <font size = "+1">
+        <div class="container">
+
+            <br>
+            <pre>Task:           <input type="String" id="activity"> </pre>
+            <pre>Importance:     <input type="float" id="importance"></pre>
+            <pre>Time:           <input type="float" id="time"></pre>
+            <button onclick = "add()"> Add task! </button>
+
+            <p id="listTasks">Nothing Added</p>
+
+            <pre>Done with:      <input type="String" id="donewith"></pre>
+            <button onclick="done()">Done Task</button> or
+            <button onclick="doneNum()">Done Number</button>
+
+            <p id="doneTasks"></p>
+
+                    <!-- <h3>Take a 10-20 minute break between each task!</h3>
+                        <h3>Debug Status: <p id="stats"></p></h3> -->
+
+                    </div>
+                </font>
+            </section>
 
 
-    <div>
-        <h2 class="welcome">
-            Hi Mitchel Tchemer3! Here are some of your contraversial posts!
-        </h2>
-    </div>
-    <p></p>
-    <fb:login-button scope="public_profile,email,publish_pages,user_posts"
-                     onlogin="checkLoginState();">
-    </fb:login-button>
-    <p></p>
-    <div id="posts">
-    </div>
-</body>
-</html>
+            <footer>
+                <p> Davi Nakajima An, Copyright &copy; 2018</p>
+            </footer>
+        </body>
+        </html>

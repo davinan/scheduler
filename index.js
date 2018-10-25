@@ -64,7 +64,7 @@ FB.api('/me/friends', {fields: 'summary'}, function(response) {
 });
 
 getPosts();
-}
+
 
 function viewPost(post){
 
