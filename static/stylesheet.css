@@ -65,6 +65,13 @@ header {
   border-radius: 3px;
 }
 
+.imgs {
+    display: inline-block;
+    margin: 30px;
+    max-height: 30px;
+    float: right;
+}
+
 header li{
   float:left;
   display:inline;
@@ -79,7 +86,6 @@ header .bad, header .current a{
   color: #ffffff;
   font-weight:bold;
 }
-
 
 /* footer */
 footer p {
